@@ -3,10 +3,13 @@ import Test.Hspec
 sumMultiplesFor limit = sumMultiples 0 (limit - 1)
 
 sumMultiples sum limit
-  | limit < 3       = sum
-  | mod limit 3 == 0 = sumMultiples (sum + limit) (limit - 1)
-  | mod limit 5 == 0 = sumMultiples (sum + limit) (limit - 1)
-  | otherwise        = sumMultiples sum (limit - 1)
+  | limit < 3     = sum
+  | otherwise     = sumMultiples (newSum sum limit) (limit - 1)
+
+newSum sum limit =
+  if mod limit 3 == 0 || mod limit 5 == 0
+    then sum + limit
+    else sum
 
 main = hspec $ do
   describe "MultipleSummer" $ do
