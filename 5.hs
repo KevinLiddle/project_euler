@@ -1,14 +1,12 @@
 import Test.Hspec
 
-smallestMultiple maxMultiple = smallestMultipleRecur maxMultiple maxMultiple
+smallestMultiple maxMultiple = smallestMultipleRecur maxMultiple (maxMultiple * (maxMultiple - 1))
 
 smallestMultipleRecur maxMultiple current
   | evenlyDivisibleByAll maxMultiple current = current
   | otherwise                                = smallestMultipleRecur maxMultiple (current + maxMultiple)
 
-evenlyDivisibleByAll maxMultiple current =
-  let divisibleList = map (\n -> (current `mod` n) == 0) [1..maxMultiple]
-    in foldl (&&) True divisibleList
+evenlyDivisibleByAll maxMultiple current = not $ any (\n -> current `mod` n /= 0) [1..maxMultiple]
 
 main = hspec $ do
   describe "smallestMultiple" $ do

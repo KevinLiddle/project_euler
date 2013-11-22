@@ -4,10 +4,10 @@ fiboSummify limit = otherFiboSum 0 1 0 limit
 
 otherFiboSum lower upper sum limit
   | upper > limit = sum
-  | otherwise     = otherFiboSum upper (lower + upper) (fiboSumRecur upper sum) limit
+  | otherwise     = otherFiboSum upper (lower + upper) (addEvenFib upper sum) limit
 
-fiboSumRecur upper sum =
-  if mod upper 2 == 0
+addEvenFib upper sum =
+  if upper `mod` 2 == 0
     then sum + upper
     else sum
 
@@ -24,5 +24,4 @@ main = hspec $ do
     it "sums the even fibonacci numbers from 1 to 13" $ do
       fiboSummify 34 `shouldBe` 44
     it "tells me what the sum is for even fibs up to 4 million" $ do
-      -- If this test passes, I ran it first and checked it against Project Euler
       fiboSummify 3999999 `shouldBe` 4613732
